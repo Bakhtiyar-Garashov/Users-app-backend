@@ -14,19 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
-from rest_framework_swagger.views import get_swagger_view
+from django.urls import path, include
+from rest_framework import permissions
+
+from drf_yasg2.views import get_schema_view
+from drf_yasg2 import openapi
+
+
+schema_view = get_schema_view(
+      openapi.Info(
+         title="Users API",
+         default_version='v1',
+         description="Resp api of users.json",
+         contact=openapi.Contact(email="bakhtiyar.garashov@ut.ee"),
+      ),
+      public=True,
+      permission_classes=(permissions.AllowAny,),
+   )
 
 
 
-
-main_patterns = [
+urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include("user_api.urls")),
-]
-
-schema_view = get_swagger_view(title='Klausapp users api',patterns=main_patterns)
-
-urlpatterns =main_patterns+ [
-    path('api/doc', schema_view, name="api_documentation"),
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+  
 ]

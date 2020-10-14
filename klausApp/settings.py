@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '-w$^l6bp*n8xrrf)ux2*-h&8!0u^^zhq*cru94_7wa()8g3ts*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,14 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'user_api',
-    'rest_framework_swagger',
+    'drf_yasg2',
     'corsheaders',# get rid of annoying CORS error
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True # allow all. Be careful in real projects
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+   
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -115,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema' }
 
 #config['MIDDLEWARE_CLASSES'] = tuple(['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE_CLASSES']))
 
@@ -141,3 +140,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,"staticfiles")
 
 django_heroku.settings(locals())
+
+TEMPLATE_LOADERS = (
+
+'django.template.loaders.eggs.Loader',
+)
